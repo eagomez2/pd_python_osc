@@ -3,7 +3,7 @@ import random
 from lab_package import midi, osc
 
 if __name__ == '__main__':
-    sender = osc.OSCSender(ip='127.0.0.1', port=8888)
+    sender = osc.OSCSender(ip='127.0.0.1', port=1123)
     print(f'Instantiated OSC sender to {sender.ip}@{sender.port}')
 
     note_generator = midi.NoteGenerator(pitch_range=(48, 48 + 24),

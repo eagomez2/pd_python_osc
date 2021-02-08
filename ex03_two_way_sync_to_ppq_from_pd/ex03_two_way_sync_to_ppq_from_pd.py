@@ -1,9 +1,10 @@
 import queue
 import time
 import threading
+import os
 import sys
 
-sys.path.append('..')
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from lab_packages import ex03_osc as osc
 from lab_packages import ex03_midi as midi
 
@@ -11,7 +12,7 @@ from lab_packages import ex03_midi as midi
 if __name__ == '__main__':
 
     def clock_message_handler(address, *args):
-        # print('received something!')
+        # print(f'estimated queue size: {ticks_queue.qsize()}')
         ticks_queue.put(args[0])
 
 
@@ -27,10 +28,7 @@ if __name__ == '__main__':
     playback_sequence_queue = queue.Queue(maxsize=0)
     generate_thread_event = threading.Event()
     quit_event = threading.Event()
-
-    params = {
-    }
-
+    
     ticks_receiver = osc.OSCReceiver(ip='127.0.0.1', port=8888, quit_event=quit_event,
                                      address_list=['/clock*'],
                                      address_handler_list=[clock_message_handler])

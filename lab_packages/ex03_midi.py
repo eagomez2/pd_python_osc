@@ -1,5 +1,6 @@
 import random
 import threading
+import time
 
 class Note:
     def __init__(self, pitch=69, velocity=64, duration=1000):
@@ -36,6 +37,7 @@ class NoteGenerator(threading.Thread):
 
 
     def run(self):
+        print('Note generator started!\n')
         while not self.params['quit_event'].is_set():
             # Takes the event over if set = True, otherwise wait
             self.params['generate_thread_event'].wait()

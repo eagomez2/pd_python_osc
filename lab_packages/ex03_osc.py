@@ -14,12 +14,13 @@ class OSCSender(threading.Thread):
     This class establishes a connection with Pd server on ip address and port.
     """
 
-    def __init__(self, ip='127.0.0.1', port=8888, ticks_queue, playback_sequence_queue):
+    def __init__(self, ip='127.0.0.1', port=8888, ticks_queue=None, playback_sequence_queue=None):
         super().__init__()
         self.setDaemon(True)
         self._socket_address = SocketAddress(ip, port)
+        self.ticks_queue = ticks_queue
+        self.playback_sequence_queue = playback_sequence_queue
         self.client = SimpleUDPClient(*self._socket_address)
-
 
     @property
     def socket_address(self):
@@ -45,6 +46,19 @@ class OSCSender(threading.Thread):
     def port(self):
         return self._socket_address.port
     
+
+    def run(self):
+        (start_tick, pitch, velocity, duration) = (None, None, None, None)
+        while True:
+            if start_tick is None:  # If no note to play, wait for a new note
+                (start_tick, pitch, velocity, duration) = self.playback_sequence_queue.get()
+            else:
+                current_tick = self.ticks_queue.get()
+
+                if current_tick == start_tick:
+                    self.send('/note', [pitch, velocity, duration])
+                    (start_tick, pitch, velocity, duration) = (None, None, None, None)
+
     
     def send(self, address, value):
         self.client.send_message(address, value)
@@ -54,7 +68,7 @@ class OSCReceiver(threading.Thread):
 
     def __init__(self, ip='127.0.0.1', port=8888, quit_event=None, address_list=['/clock*'], address_handler_list=[None]):
         super().__init__()  # Run constructor of parent class
-        self.setDaemon(daemonic)
+        self.setDaemon(True)
         self._socket_address = SocketAddress(ip, port)
         self.listening_thread = None
         self.dispatcher = Dispatcher()
@@ -103,7 +117,7 @@ class OSCReceiver(threading.Thread):
 
 
     def run(self):
-        print(f'Listening incoming OSC message on port {self.port}')
+        print(f'Listening incoming OSC message on port {self.port}\n')
         msg_count = 0
 
         while not self.quit_event.is_set():

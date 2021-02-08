@@ -1,6 +1,9 @@
 import time
 import threading
-from lab_package import osc
+import sys
+
+sys.path.append('..')
+from lab_packages import ex02_osc as osc
 
 if __name__ == '__main__':
     quit_event = threading.Event()  # Used to quit OSCReceiver

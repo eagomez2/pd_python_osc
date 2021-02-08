@@ -1,5 +1,6 @@
 import time
 import threading
+import random
 from collections import namedtuple
 from pythonosc.udp_client import SimpleUDPClient
 from pythonosc.osc_server import BlockingOSCUDPServer
@@ -7,14 +8,15 @@ from pythonosc.dispatcher import Dispatcher
 
 SocketAddress = namedtuple('SocketAddress', ['ip', 'port'])
 
-class OSCSender:
+class OSCSender(threading.Thread):
     """ Class for sending OSC messages from python to Pd.
 
     This class establishes a connection with Pd server on ip address and port.
     """
 
-    def __init__(self, ip='127.0.0.1', port=8888):
+    def __init__(self, ip='127.0.0.1', port=8888, ticks_queue, playback_sequence_queue):
         super().__init__()
+        self.setDaemon(True)
         self._socket_address = SocketAddress(ip, port)
         self.client = SimpleUDPClient(*self._socket_address)
 
@@ -50,10 +52,13 @@ class OSCSender:
 
 class OSCReceiver(threading.Thread):
 
-    def __init__(self, ip='0.0.0.0', port=8888, quit_event=None, address_list=['/clock*'], address_handler_list=[None]):
+    def __init__(self, ip='127.0.0.1', port=8888, quit_event=None, address_list=['/clock*'], address_handler_list=[None]):
         super().__init__()  # Run constructor of parent class
+        self.setDaemon(daemonic)
         self._socket_address = SocketAddress(ip, port)
+        self.listening_thread = None
         self.dispatcher = Dispatcher()
+
 
         # Map addresses to handlers
         if len(address_list) != len(address_handler_list):
@@ -103,8 +108,6 @@ class OSCReceiver(threading.Thread):
 
         while not self.quit_event.is_set():
             self.server.handle_request()
-            msg_count += 1
-            print(f'msg_count: {msg_count}')
 
     
     def default_handler(self, address, *args):

@@ -1,9 +1,13 @@
 import time
 import random
-from lab_package import midi, osc
+import sys
+
+sys.path.append('..')
+from lab_packages import ex01_midi as midi
+from lab_packages import ex01_osc as osc
 
 if __name__ == '__main__':
-    sender = osc.OSCSender(ip='127.0.0.1', port=1123)
+    sender = osc.OSCSender(ip='127.0.0.1', port=8888)
     print(f'Instantiated OSC sender to {sender.ip}@{sender.port}')
 
     note_generator = midi.NoteGenerator(pitch_range=(48, 48 + 24),

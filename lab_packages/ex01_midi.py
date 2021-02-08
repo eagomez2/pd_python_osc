@@ -9,6 +9,10 @@ class Note:
     @property
     def as_osc(self):
         return('/note', [self.pitch, self.velocity, self.duration])
+    
+    @property
+    def as_list(self):
+        return([self.pitch, self.velocity, self.duration])
 
 
 class NoteGenerator:

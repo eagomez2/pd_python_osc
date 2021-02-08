@@ -72,6 +72,7 @@ if __name__ == '__main__':
     
 
     # Start stuff here
-    clock_tick_receiver.start()
+    # clock_tick_receiver.start()
+    actions_msg_receiver.start()
 
     time.sleep(1000)

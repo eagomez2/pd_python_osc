@@ -1,0 +1,518 @@
+#N canvas 54 85 832 725 12;
+#X obj 20 21 cnv 15 700 130 empty empty Active_sender 540 12 0 14 -204786
+-66577 0;
+#X msg 43 69 disconnect;
+#X obj 344 85 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#N canvas 341 30 473 453 action_to_python 0;
+#X obj 19 149 netsend -u -b;
+#X floatatom 19 176 5 0 0 0 - - -;
+#X obj 199 68 list prepend send;
+#X obj 199 95 list trim;
+#X obj 199 12 inlet;
+#X obj 19 12 inlet;
+#X obj 199 40 oscformat /actions/generate;
+#X text 60 11 < Connect message;
+#X text 241 9 < Generate action;
+#X connect 0 0 1 0;
+#X connect 2 0 3 0;
+#X connect 3 0 0 0;
+#X connect 4 0 6 0;
+#X connect 5 0 0 0;
+#X connect 6 0 2 0;
+#X restore 32 107 pd action_to_python;
+#X f 45;
+#X msg 32 46 connect 127.0.0.1 8889;
+#X text 364 82 < Generate action;
+#X obj 20 160 cnv 15 700 230 empty empty Note_Receiver_(Routes_to_Midi_Out)
+370 12 0 14 -261682 -83269 0;
+#N canvas 0 23 1920 999 main 0;
+#X obj 28 16 r port;
+#X obj 28 133 oscparse;
+#X obj 28 46 netreceive -u -b 8888;
+#X obj 28 161 list trim;
+#X obj 108 80 spigot 0;
+#X obj 108 108 print serial_data;
+#X obj 248 47 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 111 195 spigot 0, f 20;
+#X obj 28 195 route note;
+#X text 190 251 /note pitch velocity duration;
+#X obj 28 250 cyclone/zl nth 1, f 21;
+#X obj 28 283 s pitch_unquantized;
+#X obj 111 221 print OSC;
+#X obj 29 363 makenote, f 41;
+#X obj 29 335 r pitch_quantized;
+#X obj 29 406 noteout;
+#X obj 172 283 unpack f f, f 21;
+#X connect 0 0 2 0;
+#X connect 1 0 3 0;
+#X connect 2 0 1 0;
+#X connect 2 0 4 0;
+#X connect 3 0 7 0;
+#X connect 3 0 8 0;
+#X connect 4 0 5 0;
+#X connect 6 0 4 1;
+#X connect 6 0 7 1;
+#X connect 7 0 12 0;
+#X connect 8 0 10 0;
+#X connect 10 0 11 0;
+#X connect 10 1 16 0;
+#X connect 13 0 15 0;
+#X connect 13 1 15 1;
+#X connect 14 0 13 0;
+#X connect 16 0 13 1;
+#X connect 16 1 13 2;
+#X restore 338 199 pd main;
+#X obj 337 273 loadbang;
+#X obj 337 339 s port;
+#X msg 428 299 listen 0;
+#X obj 30 180 r pitch_unquantized;
+#N canvas 809 101 960 825 quantizer_ui 0;
+#X obj 308 7 inlet;
+#X obj 100 97 bng 15 250 50 0 empty \$0-pitch1 empty 17 7 0 10 -66577
+-258113 -1;
+#X obj 118 97 bng 15 250 50 0 empty \$0-pitch3 empty 17 7 0 10 -66577
+-258113 -1;
+#X obj 94 115 bng 15 250 50 0 empty \$0-pitch0 empty 17 7 0 10 -262144
+-258113 -1;
+#X obj 111 115 bng 15 250 50 0 empty \$0-pitch2 empty 17 7 0 10 -262144
+-258113 -1;
+#X obj 129 115 bng 15 250 50 0 empty \$0-pitch4 empty 17 7 0 10 -262144
+-258113 -1;
+#X obj 156 97 bng 15 250 50 0 empty \$0-pitch6 empty 17 7 0 10 -66577
+-258113 -1;
+#X obj 174 97 bng 15 250 50 0 empty \$0-pitch8 empty 17 7 0 10 -66577
+-258113 -1;
+#X obj 146 115 bng 15 250 50 0 empty \$0-pitch5 empty 17 7 0 10 -262144
+-258113 -1;
+#X obj 165 115 bng 15 250 50 0 empty \$0-pitch7 empty 17 7 0 10 -262144
+-258113 -1;
+#X obj 183 115 bng 15 250 50 0 empty \$0-pitch9 empty 17 7 0 10 -262144
+-258113 -1;
+#X text 95 131 C;
+#X text 113 131 D;
+#X text 131 132 E;
+#X text 150 132 F;
+#X text 167 132 G;
+#X text 185 132 A;
+#X text 205 133 B;
+#X obj 200 115 bng 15 250 50 0 empty \$0-pitch11 empty 17 7 0 10 -262144
+-258113 -1;
+#X obj 191 97 bng 15 250 50 0 empty \$0-pitch10 empty 17 7 0 10 -66577
+-258113 -1;
+#X obj 93 48 tgl 15 0 \$0-quantizer-C-s \$0-quantizer-C-r empty 17
+7 0 10 -262144 -1 -1 0 1;
+#X obj 102 29 tgl 15 0 \$0-quantizer-Csharp-s \$0-quantizer-Csharp-r
+empty 17 7 0 10 -66577 -262144 -1 0 1;
+#X text 93 65 C;
+#X text 111 65 D;
+#X text 129 66 E;
+#X text 148 66 F;
+#X text 165 66 G;
+#X text 183 66 A;
+#X text 203 67 B;
+#X text 121 7 QUANTIZER;
+#X obj 110 48 tgl 15 0 \$0-quantizer-D-s \$0-quantizer-D-r empty 17
+7 0 10 -262144 -1 -1 0 1;
+#X obj 127 48 tgl 15 0 \$0-quantizer-E-s \$0-quantizer-E-r empty 17
+7 0 10 -262144 -1 -1 0 1;
+#X obj 144 48 tgl 15 0 \$0-quantizer-F-s \$0-quantizer-F-r empty 17
+7 0 10 -262144 -1 -1 0 1;
+#X obj 161 48 tgl 15 0 \$0-quantizer-G-s \$0-quantizer-G-r empty 17
+7 0 10 -262144 -1 -1 0 1;
+#X obj 179 48 tgl 15 0 \$0-quantizer-A-s \$0-quantizer-A-r empty 17
+7 0 10 -262144 -1 -1 0 1;
+#X obj 197 48 tgl 15 0 \$0-quantizer-B-s \$0-quantizer-B-r empty 17
+7 0 10 -262144 -1 -1 0 1;
+#X obj 120 29 tgl 15 0 \$0-quantizer-Dsharp-s \$0-quantizer-Dsharp-r
+empty 17 7 0 10 -66577 -262144 -1 0 1;
+#X obj 153 29 tgl 15 0 \$0-quantizer-Fsharp-s \$0-quantizer-Fsharp-r
+empty 17 7 0 10 -66577 -262144 -1 0 1;
+#X obj 171 29 tgl 15 0 \$0-quantizer-Gsharp-s \$0-quantizer-Gsharp-r
+empty 17 7 0 10 -66577 -262144 -1 0 1;
+#X obj 189 29 tgl 15 0 \$0-quantizer-Asharp-s \$0-quantizer-Asharp-r
+empty 17 7 0 10 -66577 -262144 -1 0 1;
+#X floatatom 308 35 5 0 0 0 - - -;
+#X text 353 7 < Input pitch;
+#X obj 308 62 t b b f;
+#X obj 454 53 tgl 15 0 empty \$0-quantizer-C-s empty 17 7 0 10 -262144
+-1 -1 0 1;
+#X obj 462 36 tgl 15 0 empty \$0-quantizer-Csharp-s empty 17 7 0 10
+-66577 -262144 -1 0 1;
+#X obj 471 53 tgl 15 0 empty \$0-quantizer-D-s empty 17 7 0 10 -262144
+-1 -1 0 1;
+#X obj 488 53 tgl 15 0 empty \$0-quantizer-E-s empty 17 7 0 10 -262144
+-1 -1 0 1;
+#X obj 505 53 tgl 15 0 empty \$0-quantizer-F-s empty 17 7 0 10 -262144
+-1 -1 0 1;
+#X obj 522 53 tgl 15 0 empty \$0-quantizer-G-s empty 17 7 0 10 -262144
+-1 -1 0 1;
+#X obj 539 53 tgl 15 0 empty \$0-quantizer-A-s empty 17 7 0 10 -262144
+-1 -1 0 1;
+#X obj 556 53 tgl 15 0 empty \$0-quantizer-B-s empty 17 7 0 10 -262144
+-1 -1 0 1;
+#X obj 479 36 tgl 15 0 empty \$0-quantizer-Dsharp-s empty 17 7 0 10
+-66577 -262144 -1 0 1;
+#X obj 514 36 tgl 15 0 empty \$0-quantizer-Fsharp-s empty 17 7 0 10
+-66577 -262144 -1 0 1;
+#X obj 531 36 tgl 15 0 empty \$0-quantizer-Gsharp-s empty 17 7 0 10
+-66577 -262144 -1 0 1;
+#X obj 548 36 tgl 15 0 empty \$0-quantizer-Asharp-s empty 17 7 0 10
+-66577 -262144 -1 0 1;
+#N canvas 1007 59 1920 999 quantizer 0;
+#X obj 60 259 inlet;
+#X text 14 259 Sync >;
+#X obj 121 13 inlet;
+#X obj 625 39 inlet;
+#X text 667 40 < Packed scale pitches;
+#X obj 209 65 / 12;
+#X floatatom 209 92 5 0 0 0 - - -;
+#X obj 209 149 i;
+#X obj 209 196 * 12;
+#X floatatom 209 220 5 0 0 0 - - -;
+#X floatatom 209 173 5 0 0 0 - - -;
+#X text 249 147 < No need for [t b f] (value will be stored and then
+passed to left outlet), f 23;
+#X obj 120 259 +, f 13;
+#X obj 60 290 f, f 9;
+#X obj 60 335 outlet;
+#X obj 625 66 unpack f f f f f f f f f f f f, f 148;
+#X obj 530 223 r midi_num;
+#X obj 625 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 530 344 list-abs/list-abs;
+#X obj 625 117 sel 0;
+#X msg 625 141 128;
+#X msg 657 141 0;
+#X obj 121 36 t f f, f 13;
+#X obj 121 60 % 12;
+#X floatatom 121 87 5 0 0 0 - - -;
+#X obj 121 112 s midi_num;
+#X obj 718 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 718 117 sel 0;
+#X msg 750 141 1;
+#X obj 530 319 list-abs/list-apply - 0;
+#X obj 530 248 t b f;
+#X obj 530 279 cyclone/zl reg;
+#X obj 530 423 cyclone/zl sub, f 19;
+#X obj 530 372 t l l, f 19;
+#X obj 660 398 list-abs/list-minmax;
+#X obj 625 193 cyclone/pak f f f f f f f f f f f f, f 148;
+#X obj 812 94 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 812 118 sel 0;
+#X obj 906 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 906 117 sel 0;
+#X msg 844 142 2;
+#X msg 938 141 3;
+#X msg 718 141 129;
+#X msg 812 142 129;
+#X msg 906 141 129;
+#X obj 1000 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 1000 117 sel 0;
+#X msg 1000 141 129;
+#X msg 1032 141 4;
+#X obj 1094 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 1094 117 sel 0;
+#X obj 1188 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 1188 117 sel 0;
+#X obj 1282 94 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 1282 118 sel 0;
+#X obj 1376 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 1376 117 sel 0;
+#X msg 1188 141 129;
+#X msg 1282 142 129;
+#X msg 1376 141 129;
+#X obj 1470 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 1470 117 sel 0;
+#X msg 1470 141 129;
+#X msg 1094 141 129;
+#X msg 1126 141 5;
+#X msg 1220 141 6;
+#X msg 1314 142 7;
+#X msg 1408 141 8;
+#X msg 1502 141 9;
+#X obj 1564 92 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 1564 116 sel 0;
+#X msg 1564 140 129;
+#X obj 1658 92 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 1658 116 sel 0;
+#X msg 1658 140 129;
+#X msg 1596 140 10;
+#X msg 1690 140 11;
+#X obj 530 476 cyclone/zl stream 1;
+#X obj 530 448 - 1;
+#X obj 530 501 list-abs/list-minmax;
+#X text 661 345 < Get distance with all notes;
+#X text 810 398 < Get smallest distance;
+#X text 671 423 < Get index of element that computed the smallest distance
+;
+#X text 676 452 < Changes 1-indexed elements for 0-indexed elements
+;
+#X text 675 477 < If there are 2 equal matches \, they are grouped
+;
+#X text 439 126 Allows bypassing when no packed scale is set >, f
+25;
+#X text 680 502 < The smallest match is taken;
+#X text 111 336 < Quantized note;
+#X floatatom 132 290 5 0 0 0 - - -;
+#X obj 530 531 outlet;
+#X text 582 531 < Pitch class;
+#X connect 0 0 13 0;
+#X connect 2 0 22 0;
+#X connect 3 0 15 0;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 7 0 10 0;
+#X connect 8 0 9 0;
+#X connect 9 0 12 1;
+#X connect 10 0 8 0;
+#X connect 12 0 13 1;
+#X connect 12 0 88 0;
+#X connect 13 0 14 0;
+#X connect 15 0 17 0;
+#X connect 15 1 26 0;
+#X connect 15 2 36 0;
+#X connect 15 3 38 0;
+#X connect 15 4 45 0;
+#X connect 15 5 49 0;
+#X connect 15 6 51 0;
+#X connect 15 7 53 0;
+#X connect 15 8 55 0;
+#X connect 15 9 60 0;
+#X connect 15 10 69 0;
+#X connect 15 11 72 0;
+#X connect 16 0 30 0;
+#X connect 17 0 19 0;
+#X connect 18 0 33 0;
+#X connect 19 0 20 0;
+#X connect 19 1 21 0;
+#X connect 20 0 35 0;
+#X connect 21 0 35 0;
+#X connect 22 0 23 0;
+#X connect 22 1 5 0;
+#X connect 23 0 24 0;
+#X connect 24 0 25 0;
+#X connect 26 0 27 0;
+#X connect 27 0 42 0;
+#X connect 27 1 28 0;
+#X connect 28 0 35 1;
+#X connect 29 0 18 0;
+#X connect 30 0 31 0;
+#X connect 30 1 29 2;
+#X connect 31 0 29 0;
+#X connect 32 0 78 0;
+#X connect 32 1 77 1;
+#X connect 33 0 32 0;
+#X connect 33 1 34 0;
+#X connect 34 0 32 1;
+#X connect 35 0 31 1;
+#X connect 36 0 37 0;
+#X connect 37 0 43 0;
+#X connect 37 1 40 0;
+#X connect 38 0 39 0;
+#X connect 39 0 44 0;
+#X connect 39 1 41 0;
+#X connect 40 0 35 2;
+#X connect 41 0 35 3;
+#X connect 42 0 35 1;
+#X connect 43 0 35 2;
+#X connect 44 0 35 3;
+#X connect 45 0 46 0;
+#X connect 46 0 47 0;
+#X connect 46 1 48 0;
+#X connect 47 0 35 4;
+#X connect 48 0 35 4;
+#X connect 49 0 50 0;
+#X connect 50 0 63 0;
+#X connect 50 1 64 0;
+#X connect 51 0 52 0;
+#X connect 52 0 57 0;
+#X connect 52 1 65 0;
+#X connect 53 0 54 0;
+#X connect 54 0 58 0;
+#X connect 54 1 66 0;
+#X connect 55 0 56 0;
+#X connect 56 0 59 0;
+#X connect 56 1 67 0;
+#X connect 57 0 35 6;
+#X connect 58 0 35 7;
+#X connect 59 0 35 8;
+#X connect 60 0 61 0;
+#X connect 61 0 62 0;
+#X connect 61 1 68 0;
+#X connect 62 0 35 9;
+#X connect 63 0 35 5;
+#X connect 64 0 35 5;
+#X connect 65 0 35 6;
+#X connect 66 0 35 7;
+#X connect 67 0 35 8;
+#X connect 68 0 35 9;
+#X connect 69 0 70 0;
+#X connect 70 0 71 0;
+#X connect 70 1 75 0;
+#X connect 71 0 35 10;
+#X connect 72 0 73 0;
+#X connect 73 0 74 0;
+#X connect 73 1 76 0;
+#X connect 74 0 35 11;
+#X connect 75 0 35 10;
+#X connect 76 0 35 11;
+#X connect 77 0 79 0;
+#X connect 78 0 77 0;
+#X connect 79 0 12 0;
+#X connect 79 0 89 0;
+#X restore 331 126 pd quantizer;
+#X f 18;
+#N canvas 352 528 1177 322 scale_binary_mask 0;
+#X obj 15 23 inlet;
+#X obj 15 50 t b f;
+#X obj 15 142 pack f f f f f f f f f f f f, f 91;
+#X obj 15 170 outlet;
+#X text 15 4 C;
+#X obj 70 23 inlet;
+#X obj 70 50 t b f;
+#X text 70 4 C#;
+#X obj 125 23 inlet;
+#X obj 125 50 t b f;
+#X obj 180 23 inlet;
+#X obj 180 50 t b f;
+#X obj 235 23 inlet;
+#X obj 235 50 t b f;
+#X obj 290 23 inlet;
+#X obj 290 50 t b f;
+#X obj 345 23 inlet;
+#X obj 345 50 t b f;
+#X obj 400 23 inlet;
+#X obj 400 50 t b f;
+#X text 125 4 D;
+#X text 180 4 D#;
+#X text 235 4 E;
+#X text 290 4 F;
+#X text 345 4 F#;
+#X text 400 4 G;
+#X obj 455 23 inlet;
+#X obj 455 50 t b f;
+#X obj 510 23 inlet;
+#X obj 510 50 t b f;
+#X obj 565 23 inlet;
+#X obj 565 50 t b f;
+#X obj 620 23 inlet;
+#X obj 620 50 t b f;
+#X text 455 4 G#;
+#X text 510 4 A;
+#X text 565 4 A#;
+#X text 620 4 B;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 1 2 0;
+#X connect 2 0 3 0;
+#X connect 5 0 6 0;
+#X connect 6 0 2 0;
+#X connect 6 1 2 1;
+#X connect 8 0 9 0;
+#X connect 9 0 2 0;
+#X connect 9 1 2 2;
+#X connect 10 0 11 0;
+#X connect 11 0 2 0;
+#X connect 11 1 2 3;
+#X connect 12 0 13 0;
+#X connect 13 0 2 0;
+#X connect 13 1 2 4;
+#X connect 14 0 15 0;
+#X connect 15 0 2 0;
+#X connect 15 1 2 5;
+#X connect 16 0 17 0;
+#X connect 17 0 2 0;
+#X connect 17 1 2 6;
+#X connect 18 0 19 0;
+#X connect 19 0 2 0;
+#X connect 19 1 2 7;
+#X connect 26 0 27 0;
+#X connect 27 0 2 0;
+#X connect 27 1 2 8;
+#X connect 28 0 29 0;
+#X connect 29 0 2 0;
+#X connect 29 1 2 9;
+#X connect 30 0 31 0;
+#X connect 31 0 2 0;
+#X connect 31 1 2 10;
+#X connect 32 0 33 0;
+#X connect 33 0 2 0;
+#X connect 33 1 2 11;
+#X restore 454 99 pd scale_binary_mask;
+#X f 25;
+#X floatatom 331 150 5 0 0 0 - - -;
+#X obj 331 173 outlet;
+#X obj 309 209 i, f 21;
+#X obj 309 235 sel 0 1 2 3 4 5 6 7 8 9 10 11;
+#X obj 309 265 s \$0-pitch0;
+#X obj 325 291 s \$0-pitch1;
+#X obj 342 318 s \$0-pitch2;
+#X obj 359 345 s \$0-pitch3;
+#X obj 375 372 s \$0-pitch4;
+#X obj 392 265 s \$0-pitch5;
+#X obj 409 291 s \$0-pitch6;
+#X obj 425 318 s \$0-pitch7;
+#X obj 442 345 s \$0-pitch8;
+#X obj 459 372 s \$0-pitch9;
+#X obj 475 265 s \$0-pitch10;
+#X obj 492 291 s \$0-pitch11;
+#X connect 0 0 40 0;
+#X connect 40 0 42 0;
+#X connect 42 0 59 0;
+#X connect 42 1 55 0;
+#X connect 42 2 55 1;
+#X connect 43 0 56 0;
+#X connect 44 0 56 1;
+#X connect 45 0 56 2;
+#X connect 46 0 56 4;
+#X connect 47 0 56 5;
+#X connect 48 0 56 7;
+#X connect 49 0 56 9;
+#X connect 50 0 56 11;
+#X connect 51 0 56 3;
+#X connect 52 0 56 6;
+#X connect 53 0 56 8;
+#X connect 54 0 56 10;
+#X connect 55 0 57 0;
+#X connect 55 1 59 1;
+#X connect 56 0 55 2;
+#X connect 57 0 58 0;
+#X connect 59 0 60 0;
+#X connect 60 0 61 0;
+#X connect 60 1 62 0;
+#X connect 60 2 63 0;
+#X connect 60 3 64 0;
+#X connect 60 4 65 0;
+#X connect 60 5 66 0;
+#X connect 60 6 67 0;
+#X connect 60 7 68 0;
+#X connect 60 8 69 0;
+#X connect 60 9 70 0;
+#X connect 60 10 71 0;
+#X connect 60 11 72 0;
+#X coords 0 -1 1 1 300 160 1 0 0;
+#X restore 30 199 pd quantizer_ui;
+#X obj 30 359 s pitch_quantized;
+#X msg 337 299 listen 9000;
+#X connect 1 0 3 0;
+#X connect 2 0 3 1;
+#X connect 4 0 3 0;
+#X connect 8 0 14 0;
+#X connect 10 0 9 0;
+#X connect 11 0 12 0;
+#X connect 12 0 13 0;
+#X connect 14 0 9 0;
+#X coords 0 -1 1 1 720 390 1 10 10;

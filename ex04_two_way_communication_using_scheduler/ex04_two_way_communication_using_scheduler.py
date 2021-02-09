@@ -45,7 +45,7 @@ if __name__ == '__main__':
                                                 address_handler_list=[actions_handler])
 
 
-    note_generator = midi.NoteGenerator(pitch_range=(40, 52),
+    note_generator = midi.NoteGenerator(pitch_range=(60, 72),
                                         velocity_range=(78, 80),
                                         duration_range=(99, 100),
                                         quantize=True,
@@ -58,6 +58,8 @@ if __name__ == '__main__':
                                             'onset_difference_range': (100, 100),
                                             'grace_time_before_playback': 2,
                                             'quit_event': quit_event,
+                                            'fit_to_scale': True,
+                                            'scale_to_fit': [0, 2, 4, 5, 7, 9, 11],
                                         })
 
 

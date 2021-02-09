@@ -1,29 +1,37 @@
-#N canvas 582 136 832 725 12;
+#N canvas 902 140 832 725 12;
 #X obj 20 21 cnv 15 700 130 empty empty Active_sender 540 12 0 14 -204786
 -66577 0;
 #X msg 43 69 disconnect;
-#X obj 344 85 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+#X obj 203 86 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#N canvas 341 30 473 453 action_to_python 0;
+#N canvas 341 30 753 453 action_to_python 1;
 #X obj 19 149 netsend -u -b;
 #X floatatom 19 176 5 0 0 0 - - -;
-#X obj 199 68 list prepend send;
-#X obj 199 95 list trim;
+#X obj 199 80 list prepend send;
+#X obj 199 107 list trim;
 #X obj 199 12 inlet;
 #X obj 19 12 inlet;
 #X obj 199 40 oscformat /actions/generate;
 #X text 60 11 < Connect message;
 #X text 241 9 < Generate action;
+#X obj 402 12 inlet;
+#X obj 402 38 oscformat /actions/bpm;
+#X obj 570 38 oscformat /actions/ppq;
+#X obj 570 14 inlet;
 #X connect 0 0 1 0;
 #X connect 2 0 3 0;
 #X connect 3 0 0 0;
 #X connect 4 0 6 0;
 #X connect 5 0 0 0;
 #X connect 6 0 2 0;
+#X connect 9 0 10 0;
+#X connect 10 0 2 0;
+#X connect 11 0 2 0;
+#X connect 12 0 11 0;
 #X restore 32 107 pd action_to_python;
-#X f 45;
+#X f 74;
 #X msg 32 46 connect 127.0.0.1 8889;
-#X text 364 82 < Generate action;
+#X text 223 83 < Generate action;
 #X obj 20 160 cnv 15 700 230 empty empty Note_Receiver_(Routes_to_Midi_Out)
 370 12 0 14 -261682 -83269 0;
 #N canvas 0 23 1920 999 main 0;
@@ -102,9 +110,9 @@
 #X obj 191 97 bng 15 250 50 0 empty \$0-pitch10 empty 17 7 0 10 -66577
 -258113 -1;
 #X obj 93 48 tgl 15 0 \$0-quantizer-C-s \$0-quantizer-C-r empty 17
-7 0 10 -262144 -1 -1 0 1;
+7 0 10 -262144 -1 -1 1 1;
 #X obj 102 29 tgl 15 0 \$0-quantizer-Csharp-s \$0-quantizer-Csharp-r
-empty 17 7 0 10 -66577 -262144 -1 0 1;
+empty 17 7 0 10 -66577 -262144 -1 1 1;
 #X text 93 65 C;
 #X text 111 65 D;
 #X text 129 66 E;
@@ -114,52 +122,52 @@ empty 17 7 0 10 -66577 -262144 -1 0 1;
 #X text 203 67 B;
 #X text 121 7 QUANTIZER;
 #X obj 110 48 tgl 15 0 \$0-quantizer-D-s \$0-quantizer-D-r empty 17
-7 0 10 -262144 -1 -1 0 1;
+7 0 10 -262144 -1 -1 1 1;
 #X obj 127 48 tgl 15 0 \$0-quantizer-E-s \$0-quantizer-E-r empty 17
-7 0 10 -262144 -1 -1 0 1;
+7 0 10 -262144 -1 -1 1 1;
 #X obj 144 48 tgl 15 0 \$0-quantizer-F-s \$0-quantizer-F-r empty 17
-7 0 10 -262144 -1 -1 0 1;
+7 0 10 -262144 -1 -1 1 1;
 #X obj 161 48 tgl 15 0 \$0-quantizer-G-s \$0-quantizer-G-r empty 17
-7 0 10 -262144 -1 -1 0 1;
+7 0 10 -262144 -1 -1 1 1;
 #X obj 179 48 tgl 15 0 \$0-quantizer-A-s \$0-quantizer-A-r empty 17
-7 0 10 -262144 -1 -1 0 1;
+7 0 10 -262144 -1 -1 1 1;
 #X obj 197 48 tgl 15 0 \$0-quantizer-B-s \$0-quantizer-B-r empty 17
-7 0 10 -262144 -1 -1 0 1;
+7 0 10 -262144 -1 -1 1 1;
 #X obj 120 29 tgl 15 0 \$0-quantizer-Dsharp-s \$0-quantizer-Dsharp-r
-empty 17 7 0 10 -66577 -262144 -1 0 1;
+empty 17 7 0 10 -66577 -262144 -1 1 1;
 #X obj 153 29 tgl 15 0 \$0-quantizer-Fsharp-s \$0-quantizer-Fsharp-r
-empty 17 7 0 10 -66577 -262144 -1 0 1;
+empty 17 7 0 10 -66577 -262144 -1 1 1;
 #X obj 171 29 tgl 15 0 \$0-quantizer-Gsharp-s \$0-quantizer-Gsharp-r
-empty 17 7 0 10 -66577 -262144 -1 0 1;
+empty 17 7 0 10 -66577 -262144 -1 1 1;
 #X obj 189 29 tgl 15 0 \$0-quantizer-Asharp-s \$0-quantizer-Asharp-r
-empty 17 7 0 10 -66577 -262144 -1 0 1;
+empty 17 7 0 10 -66577 -262144 -1 1 1;
 #X floatatom 308 35 5 0 0 0 - - -;
 #X text 353 7 < Input pitch;
 #X obj 308 62 t b b f;
 #X obj 454 53 tgl 15 0 empty \$0-quantizer-C-s empty 17 7 0 10 -262144
--1 -1 0 1;
+-1 -1 1 1;
 #X obj 462 36 tgl 15 0 empty \$0-quantizer-Csharp-s empty 17 7 0 10
--66577 -262144 -1 0 1;
+-66577 -262144 -1 1 1;
 #X obj 471 53 tgl 15 0 empty \$0-quantizer-D-s empty 17 7 0 10 -262144
--1 -1 0 1;
+-1 -1 1 1;
 #X obj 488 53 tgl 15 0 empty \$0-quantizer-E-s empty 17 7 0 10 -262144
--1 -1 0 1;
+-1 -1 1 1;
 #X obj 505 53 tgl 15 0 empty \$0-quantizer-F-s empty 17 7 0 10 -262144
--1 -1 0 1;
+-1 -1 1 1;
 #X obj 522 53 tgl 15 0 empty \$0-quantizer-G-s empty 17 7 0 10 -262144
--1 -1 0 1;
+-1 -1 1 1;
 #X obj 539 53 tgl 15 0 empty \$0-quantizer-A-s empty 17 7 0 10 -262144
--1 -1 0 1;
+-1 -1 1 1;
 #X obj 556 53 tgl 15 0 empty \$0-quantizer-B-s empty 17 7 0 10 -262144
--1 -1 0 1;
+-1 -1 1 1;
 #X obj 479 36 tgl 15 0 empty \$0-quantizer-Dsharp-s empty 17 7 0 10
--66577 -262144 -1 0 1;
+-66577 -262144 -1 1 1;
 #X obj 514 36 tgl 15 0 empty \$0-quantizer-Fsharp-s empty 17 7 0 10
--66577 -262144 -1 0 1;
+-66577 -262144 -1 1 1;
 #X obj 531 36 tgl 15 0 empty \$0-quantizer-Gsharp-s empty 17 7 0 10
--66577 -262144 -1 0 1;
+-66577 -262144 -1 1 1;
 #X obj 548 36 tgl 15 0 empty \$0-quantizer-Asharp-s empty 17 7 0 10
--66577 -262144 -1 0 1;
+-66577 -262144 -1 1 1;
 #N canvas 1007 59 1920 999 quantizer 0;
 #X obj 60 259 inlet;
 #X text 14 259 Sync >;
@@ -179,7 +187,7 @@ passed to left outlet), f 23;
 #X obj 60 335 outlet;
 #X obj 625 66 unpack f f f f f f f f f f f f, f 148;
 #X obj 530 223 r midi_num;
-#X obj 625 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 625 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 530 344 list-abs/list-abs;
 #X obj 625 117 sel 0;
@@ -189,7 +197,7 @@ passed to left outlet), f 23;
 #X obj 121 60 % 12;
 #X floatatom 121 87 5 0 0 0 - - -;
 #X obj 121 112 s midi_num;
-#X obj 718 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 718 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 718 117 sel 0;
 #X msg 750 141 1;
@@ -200,10 +208,10 @@ passed to left outlet), f 23;
 #X obj 530 372 t l l, f 19;
 #X obj 660 398 list-abs/list-minmax;
 #X obj 625 193 cyclone/pak f f f f f f f f f f f f, f 148;
-#X obj 812 94 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 812 94 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 812 118 sel 0;
-#X obj 906 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 906 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 906 117 sel 0;
 #X msg 844 142 2;
@@ -211,27 +219,27 @@ passed to left outlet), f 23;
 #X msg 718 141 129;
 #X msg 812 142 129;
 #X msg 906 141 129;
-#X obj 1000 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 1000 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 1000 117 sel 0;
 #X msg 1000 141 129;
 #X msg 1032 141 4;
-#X obj 1094 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 1094 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 1094 117 sel 0;
-#X obj 1188 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 1188 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 1188 117 sel 0;
-#X obj 1282 94 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 1282 94 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 1282 118 sel 0;
-#X obj 1376 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 1376 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 1376 117 sel 0;
 #X msg 1188 141 129;
 #X msg 1282 142 129;
 #X msg 1376 141 129;
-#X obj 1470 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 1470 93 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 1470 117 sel 0;
 #X msg 1470 141 129;
@@ -241,11 +249,11 @@ passed to left outlet), f 23;
 #X msg 1314 142 7;
 #X msg 1408 141 8;
 #X msg 1502 141 9;
-#X obj 1564 92 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 1564 92 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 1564 116 sel 0;
 #X msg 1564 140 129;
-#X obj 1658 92 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+#X obj 1658 92 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
 1;
 #X obj 1658 116 sel 0;
 #X msg 1658 140 129;
@@ -507,6 +515,10 @@ passed to left outlet), f 23;
 #X restore 30 199 pd quantizer_ui;
 #X obj 30 359 s pitch_quantized;
 #X msg 337 299 listen 9000;
+#X floatatom 375 82 5 40 240 0 - - -;
+#X text 415 81 < BPM;
+#X floatatom 547 82 5 240 480 0 - - -;
+#X text 590 83 < PPQ;
 #X connect 1 0 3 0;
 #X connect 2 0 3 1;
 #X connect 4 0 3 0;
@@ -515,4 +527,6 @@ passed to left outlet), f 23;
 #X connect 11 0 12 0;
 #X connect 12 0 13 0;
 #X connect 14 0 9 0;
+#X connect 15 0 3 2;
+#X connect 17 0 3 3;
 #X coords 0 -1 1 1 720 390 1 10 10;

@@ -48,8 +48,13 @@ class NoteGenerator(threading.Thread):
     def bpm_duration(self):
         return 60000 / self.bpm
 
-    def fit_to_scale(self):
-        pass
+
+    def fit_to_scale(self, note_n):
+        scale = np.array(self.params['scale_to_fit'])
+        nearest_note_idx = np.abs(scale - note_n % 12).argmin()
+        quantized_note_n = int((note_n // 12) * 12 + scale[nearest_note_idx])
+        return quantized_note_n
+
 
     def get_humanized_delta(self, max_variation='32th'):
         # Other max_variation values have not been implemented
@@ -81,6 +86,9 @@ class NoteGenerator(threading.Thread):
                 pitch = int(random.randrange(*self.pitch_range))
                 velocity = int(random.randrange(*self.velocity_range))
                 duration = int(random.randrange(*self.duration_range))
+
+                if self.params['fit_to_scale']:
+                    pitch = self.fit_to_scale(pitch)
 
                 # If quantize is True, notes are quantized to a 16th notes grid
                 if self.quantize:

@@ -1,4 +1,4 @@
-#N canvas 54 85 832 725 12;
+#N canvas 582 136 832 725 12;
 #X obj 20 21 cnv 15 700 130 empty empty Active_sender 540 12 0 14 -204786
 -66577 0;
 #X msg 43 69 disconnect;

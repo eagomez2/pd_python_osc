@@ -33,10 +33,10 @@ if __name__ == '__main__':
 
     }
 
-    clock_tick_receiver = osc.OSCReceiver(ip='127.0.0.1', port=8888,
-                                           quit_event=quit_event,
-                                           address_list=['/clock*'],
-                                           address_handler_list=[clock_message_handler])
+    # clock_tick_receiver = osc.OSCReceiver(ip='127.0.0.1', port=8888,
+    #                                        quit_event=quit_event,
+    #                                        address_list=['/clock*'],
+    #                                        address_handler_list=[clock_message_handler])
 
 
     actions_msg_receiver = osc.OSCReceiver(ip='127.0.0.1', port=8889,
@@ -47,7 +47,9 @@ if __name__ == '__main__':
 
     note_generator = midi.NoteGenerator(pitch_range=(40, 52),
                                         velocity_range=(78, 80),
-                                        duration_range=(30, 200),
+                                        duration_range=(99, 100),
+                                        quantize=True,
+                                        humanize=False,
                                         params = {
                                             'generate_thread_event': generate_thread_event,
                                             'playback_sequence_queue': playback_sequence_queue,
@@ -69,10 +71,12 @@ if __name__ == '__main__':
         }
     )
 
-    
 
-    # Start stuff here
     # clock_tick_receiver.start()
     actions_msg_receiver.start()
+    note_generator.start()
+    playback_scheduler.start()
 
     time.sleep(1000)
+     
+    # Skipped part
